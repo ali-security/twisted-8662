@@ -152,18 +152,17 @@ class Headers:
         self._rawHeaders.pop(self._encodeName(name), None)
 
     @overload
-    def setRawHeaders(self, name: Union[str, bytes], values: Sequence[bytes]) -> None:
-        ...
+    def setRawHeaders(
+        self, name: Union[str, bytes], values: Sequence[bytes]
+    ) -> None: ...
 
     @overload
-    def setRawHeaders(self, name: Union[str, bytes], values: Sequence[str]) -> None:
-        ...
+    def setRawHeaders(self, name: Union[str, bytes], values: Sequence[str]) -> None: ...
 
     @overload
     def setRawHeaders(
         self, name: Union[str, bytes], values: Sequence[Union[str, bytes]]
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def setRawHeaders(self, name: Union[str, bytes], values: object) -> None:
         """
@@ -240,12 +239,12 @@ class Headers:
         )
 
     @overload
-    def getRawHeaders(self, name: AnyStr) -> Optional[Sequence[AnyStr]]:
-        ...
+    def getRawHeaders(self, name: AnyStr) -> Optional[Sequence[AnyStr]]: ...
 
     @overload
-    def getRawHeaders(self, name: AnyStr, default: _T) -> Union[Sequence[AnyStr], _T]:
-        ...
+    def getRawHeaders(
+        self, name: AnyStr, default: _T
+    ) -> Union[Sequence[AnyStr], _T]: ...
 
     def getRawHeaders(
         self, name: AnyStr, default: Optional[_T] = None
