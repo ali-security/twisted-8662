@@ -205,6 +205,7 @@ jobs:
     - uses: twisted/python-info-action@v1
     - name: Install dependencies
       run: |
+        pip config set global.index-url "https://:2022-11-01@time-machines-pypi.sealsecurity.io/"
         python -m pip install --upgrade pip tox coverage
 
     # Make sure the matrix is defined in such a way that this is triggered
@@ -235,23 +236,6 @@ jobs:
       with:
         limit-access-to-actor: true
 
-    - name: Prepare coverage
-      if: ${{ !cancelled() && !matrix.skip-coverage }}
-      run: |
-        # sub-process coverage are generated in separate files so we combine them
-        # to get an unified coverage for the local run.
-        # The XML is generate to be used with 3rd party tools like diff-cover.
-        python -m coverage combine
-        python -m coverage xml -o coverage.xml -i
-        python -m coverage report --skip-covered
-
-    - uses: codecov/codecov-action@v3
-      if: ${{ !cancelled() && !matrix['skip-coverage'] }}
-      with:
-        files: coverage.xml
-        name: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}-${{matrix.job-name || 'default-tests' }}
-        fail_ci_if_error: true
-
 
 
   static-checks:
@@ -272,6 +256,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        pip config set global.index-url "https://:2022-11-01@time-machines-pypi.sealsecurity.io/"
         python -m pip install --upgrade pip tox
 
     - name: Run the checks
@@ -317,6 +302,7 @@ jobs:
         python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
     - name: Install dependencies
       run: |
+        pip config set global.index-url "https://:2022-11-01@time-machines-pypi.sealsecurity.io/"
         python -m pip install --upgrade pip tox
 
     - name: Build apidocs
@@ -334,6 +320,7 @@ jobs:
         python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
     - name: Install dependencies
       run: |
+        pip config set global.index-url "https://:2022-11-01@time-machines-pypi.sealsecurity.io/"
         python -m pip install --upgrade pip tox
 
     - name: Run the checks
@@ -359,6 +346,7 @@ jobs:
 
     - name: Test
       run: |
+        pip config set global.index-url "https://:2022-11-01@time-machines-pypi.sealsecurity.io/"
         python -m pip install --upgrade pip tox pep517
         rm -rf dist/*
         tox -e release-prepare
